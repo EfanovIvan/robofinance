@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'root'
+      POSTGRES_DB_NAME: 'robofinance'
+
+    ports:
+      - 5432:5432
+
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d/init_db.sh
+      - database:/var/lib/postgresql/data
+
+  app:
+    image: robofinance:latest
+    ports:
+      - 8080:8080
+
+    links:
+      - postgres
+    environment:
+      POSTGRES_PORT: '5432'
+      POSTGRES_DB_NAME: 'robofinance'
+      POSTGRES_USERNAME: 'postgres'
+      POSTGRES_PASSWORD: 'root'
+    depends_on:
+      - postgres
+
+volumes:
+  database:
