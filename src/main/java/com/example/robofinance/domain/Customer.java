@@ -24,12 +24,12 @@ public class Customer {
     @Column
     private String middleName;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "actual_address_id")
     private Address actualAddress;
 
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "registred_address_id")
     private Address registeredAddress;
 
